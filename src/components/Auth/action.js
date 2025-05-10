@@ -3,17 +3,14 @@ import { cookies } from 'next/headers'
 import api from "@/api"
 import { revalidatePath } from 'next/cache'
 
-export async function fethingAction (id, validatePath, url, action, data) {
+export async function fethingAction (data) {
 
         const cookieStore = await cookies()
 
-        if(action === 'create') {
             try {
-                const res = await api.post(`${url}`, data)
+                const res = await api.post(`/auth/login`, data)
                 cookieStore.set('token', JSON.stringify(res.data))
                 console.log(res.data)
-                revalidatePath(validatePath)
-                
                 return {
                     success : true,
                     isLoading : false,
@@ -28,6 +25,4 @@ export async function fethingAction (id, validatePath, url, action, data) {
                     errorMessage: error.message
                 }
             }
-        }
-
 }

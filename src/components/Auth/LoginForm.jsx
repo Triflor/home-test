@@ -29,7 +29,7 @@ export default function LoginForm ({setTrigger}) {
 
         try {
             // const res = await api.post('/auth/login', data)
-            const res = await fethingAction('', '/home', '/auth/login', 'create', data)
+            const res = await fethingAction(data)
             if(res.success){
                 Cookies.set('user', data.username)
                 router.push('/home')

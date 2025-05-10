@@ -14,15 +14,11 @@ export default function Hero() {
 
     useEffect(() => {
         async function fething () {
-            const stored = Cookies.get('token')
-            const token = JSON.parse(stored)?.token
+            // const stored = Cookies.get('token')
+            // const token = JSON.parse(stored)?.token
 
             try {
-                const res = await api.get('/categories', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
+                const res = await api.get('/categories')
                 setCategories(res.data.data)
 
             } catch(err) {

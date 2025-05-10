@@ -10,27 +10,21 @@ const ArticleCard = dynamic(() => import("@/components/ArticleCard"))
 export default async function Details ({params}) {
     const { slug } = await params
 
-    const cookieStore = await cookies()
-    const raw = cookieStore.get('token')?.value
-    let parsed
-    const token = parsed.token
+    // const cookieStore = await cookies()
+    // const raw = cookieStore.get('token')?.value
+    // let parsed
+    // const token = parsed.token
 
-    try {
-        parsed = JSON.parse(raw)
-    } catch {
-        console.log('invalid session data')
-    }
+    // try {
+    //     parsed = JSON.parse(raw)
+    // } catch {
+    //     console.log('invalid session data')
+    // }
 
-    const res = await api.get(`/articles/${slug[1]}`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })  
+    const res = await api.get(`/articles/${slug[1]}`)  
     
     const resArticles = await api.get(`/articles`, {
-        headers: {
-            Authorization: `Bearer ${token}`
-        },
+
         params : {
             categoryId : slug[0],
             limit : 3

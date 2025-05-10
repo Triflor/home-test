@@ -18,7 +18,7 @@ export default async function Home () {
 
             <div className='bg-white min-h-[30rem] w-[100%] px-[100px] pt-[40px]'>
                 <div className=' h-[100%] w-[100%]'>
-                    <p className='mb-[30px] md:block hidden'>Showing : 20 of 240 articles</p>
+                    <p className='mb-[30px] md:block hidden'>Showing : {datas.length} of 0 articles</p>
                     <div className=''>
                         <ArticleCard datas={datas}/>
                     </div>

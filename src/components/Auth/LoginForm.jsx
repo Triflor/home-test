@@ -8,8 +8,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
-import api from "@/api"
-import { fethingAction } from './action'
 
 const schema = z.object({
     username: z.string().nonempty('Please enter username.'),
@@ -28,22 +26,19 @@ export default function LoginForm ({setTrigger}) {
         setLoading(true)
 
         try {
-            // const res = await api.post('/auth/login', data)
-            const res = await fethingAction(data)
-            if(res.success){
-                Cookies.set('user', data.username)
-                router.push('/home')
-            }
+            const res = await fetch('/api/login', {
+                method : 'POST',
+                body : JSON.stringify(data)
+            })
+            
+            const resData = await res.json()
 
-            // Cookies.set('token', JSON.stringify(res.data))
-            // Cookies.set('user', data.username)
-
-            // setLoading(false)
-            // if(res.data.role == 'User') router.push('/home')
-            // else router.push('/admin/articles')
+            setLoading(false)
+            if(resData.role == 'User') router.push('/home')
+            else router.push('/admin/articles')
 
         } catch (err) {
-            console.error('Err :', err.response?.data || err.message)
+            console.error('Error :', err.response?.data || err.message)
         }        
     }
 
@@ -96,7 +91,7 @@ export default function LoginForm ({setTrigger}) {
                 type='submit'
                 className="cursor-pointer text-[14px] primary-col-bg rounded-md h-[40px] mb-6 w-[100%] flex 
                 justify-center items-center text-[white]"> 
-                    Login
+                   { loading ? '...' : 'Login' }
                 </button>
             </form>
             <div className="text-[14px]">Didn't have an account? 

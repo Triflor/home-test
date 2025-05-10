@@ -19,5 +19,4 @@ axiosRetry(api, {
     },
 })
 
-
 export default api

@@ -39,8 +39,13 @@ export default function RegisterForm ({setTrigger}) {
         setLoading(true)
 
         try {
-            const res = await api.post('/auth/register', data)
-            console.log(res.data)
+            const res = await fetch('/api/register', {
+                method : 'POST',
+                body : JSON.stringify(data)
+            })
+            
+            const resData = await res.json()
+
             setSuccesRegister(true)
             setLoading(false)
 
@@ -155,7 +160,7 @@ export default function RegisterForm ({setTrigger}) {
                 disabled={loading}
                 className="cursor-pointer text-[14px] primary-col-bg rounded-md h-[40px] mb-6 w-[100%] 
                 flex justify-center items-center text-[white]"> 
-                    Register
+                    {loading ? '...' : 'Register'}
                 </button>
                 {successRegister && 
                     <div 

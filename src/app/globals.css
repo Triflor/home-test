@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  --font-archivo : 'Archivo', sans-serif
+}
+
+.primary-col-bg {
+  background-color: #2563EB;
+}
+
+.primary-light-col-bg {
+  background-color: #3B82F6;
+}
+
+.primary-col-bg-trans {
+  background-color: #2564ebd5;
+}
+
+.primary-col {
+  color:#2563EB;
+}
+
+
+.dark-primary-col {
+  color: #1E3A8A;
+}
+
+.border-slate {
+  border-color: #E2E8F0;
+}
+
+.bg-alert {
+  background-color: #1e26318a;
+}
+
+.soft-col-bg {
+  background-color:#BFDBFE
+}
+
+.light-col {
+  color: #475569;
+}
+
+.darker-col {
+  color: #334155
+}
+
+.darkest-col {
+  color: #1e2631
+}
+
+.danger-col {
+  color:rgb(235, 57, 57);
+}
+
+.bg-trans-danger {
+  background-color:rgba(243, 99, 99, 0.49);
+  backdrop-filter: blur(20px);
+}
+
+.bg-trans {
+  background-color: #6371f32c;
+  backdrop-filter: blur(20px);
+}
+
+.bg-trans-success {
+  background-color: #6371f32c;
+  backdrop-filter: blur(20px);
+}
+
+.red-col {
+  color : #EF4444
+}
+
+.danger-border-col {
+  border-color:rgb(235, 57, 57);
+}
+
+.custom-quill-editor .ql-container {
+  @apply border-2 border-slate-300 rounded-b-md;
+}
+
+.custom-quill-editor .ql-toolbar {
+  @apply border-2 border-slate-300 bg-white rounded-t-md;
+}
+
+body {
+  font-family: var(--font-archivo);
+}

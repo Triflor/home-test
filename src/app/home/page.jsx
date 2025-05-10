@@ -13,7 +13,6 @@ export default async function Home () {
     const res = await api.get('/articles')    
 
     let datas = res.data.data
-    console.log(datas)
 
     return (
         <div className="w-[100%]">

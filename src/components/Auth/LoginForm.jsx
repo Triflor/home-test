@@ -9,6 +9,7 @@ import { useState } from "react"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
 import api from "@/api"
+import { fethingAction } from './action'
 
 const schema = z.object({
     username: z.string().nonempty('Please enter username.'),
@@ -27,14 +28,19 @@ export default function LoginForm ({setTrigger}) {
         setLoading(true)
 
         try {
-            const res = await api.post('/auth/login', data)
-            
-            Cookies.set('token', JSON.stringify(res.data))
-            Cookies.set('user', data.username)
+            // const res = await api.post('/auth/login', data)
+            const res = await fethingAction('', '/home', '/auth/login', 'create', data)
+            if(res.success){
+                Cookies.set('user', data.username)
+                router.push('/home')
+            }
 
-            setLoading(false)
-            if(res.data.role == 'User') router.push('/home')
-            else router.push('/admin/articles')
+            // Cookies.set('token', JSON.stringify(res.data))
+            // Cookies.set('user', data.username)
+
+            // setLoading(false)
+            // if(res.data.role == 'User') router.push('/home')
+            // else router.push('/admin/articles')
 
         } catch (err) {
             console.error('Err :', err.response?.data || err.message)

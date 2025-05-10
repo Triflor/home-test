@@ -11,7 +11,7 @@ export async function POST(req) {
         cookieStore.set('token', JSON.stringify(res.data), {
             secure: true
         })
-        cookieStore.set('user', JSON.stringify(body.username), {
+        cookieStore.set('user', body.username, {
             secure: true
         })
         return NextResponse.json({

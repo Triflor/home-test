@@ -8,6 +8,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import Cookies from "js-cookie"
 import { useRouter } from "next/navigation"
+import dynamic from 'next/dynamic'
+
+const FailedAlert = dynamic(() => import('../Popup/FailedAlert'))
 
 const schema = z.object({
     username: z.string().nonempty('Please enter username.'),
@@ -19,6 +22,7 @@ export default function LoginForm ({setTrigger}) {
         resolver : zodResolver(schema)
     })
     const [loading, setLoading] = useState(false)
+    const [failedLogin, setFailedLogin] = useState(false)
     const router = useRouter()
 
     const onSubmit = async (data, e) => {
@@ -34,8 +38,16 @@ export default function LoginForm ({setTrigger}) {
             const resData = await res.json()
 
             setLoading(false)
-            if(resData.role == 'User') router.push('/home')
-            else router.push('/admin/articles')
+            if(resData.success) {
+                if(resData.role == 'User') router.push('/home')
+                else router.push('/admin/articles')
+            } 
+            if(!resData.success) {
+                setFailedLogin(true)
+                setTimeout(() => {
+                    setFailedLogin(false)
+                },2500)
+            }
 
         } catch (err) {
             console.error('Error :', err.response?.data || err.message)
@@ -47,6 +59,7 @@ export default function LoginForm ({setTrigger}) {
         className="w-[400px] h-[376px] flex flex-col justify-center items-center rounded-[12px] 
         py-[40px] px-[22px] 
         md:px-[18px] bg-white">
+        { failedLogin && <FailedAlert text={'Failed to Login'}/> }
             <div className="flex flex-row items-center justify-between mb-6">
                 <div className="" style={{marginRight:'5px'}}>
                     <Image
@@ -89,8 +102,8 @@ export default function LoginForm ({setTrigger}) {
                 <button 
                 disabled={loading}
                 type='submit'
-                className="cursor-pointer text-[14px] primary-col-bg rounded-md h-[40px] mb-6 w-[100%] flex 
-                justify-center items-center text-[white]"> 
+                className={`cursor-pointer text-[14px] ${loading ? 'primary-col-bg-disable' : 'primary-col-bg'} rounded-md h-[40px] mb-6 w-[100%] flex 
+                justify-center items-center text-[white]`}> 
                    { loading ? '...' : 'Login' }
                 </button>
             </form>

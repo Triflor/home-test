@@ -8,12 +8,22 @@ const Navbar = dynamic(() => import('@/components/Navbar'))
 const Footer = dynamic(() => import('@/components/Footer'))
 
 export default async function Home () {
-    const res = await api.get('/articles')    
-    let datas = res.data.data
+    let datas
+    const stored = cookies()
+    const name = stored.get('user')?.value || 'Your name'
+
+    console.log(name)
+    try {
+        const res = await api.get('/articles')    
+        datas = res.data.data
+        console.log(datas)
+    } catch (error) {
+        console.error(error?.message || error?.response?.data || error)
+    }
 
     return (
         <div className="w-[100%]">
-            <Navbar username={'soban'}/>
+            <Navbar username={name}/>
             <Hero/>
 
             <div className='bg-white min-h-[30rem] w-[100%] px-[100px] pt-[40px]'>

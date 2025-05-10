@@ -136,8 +136,8 @@ export default function RegisterForm ({setTrigger}) {
                                         </div>
                                     { dropdown &&
                                     <div 
-                                    className="absolute drop-shadow-md transition-all duration-300 mt-[2.7rem] w-[100%] h-[5rem] rounded-[5px]">
-                                        <ul className="darkest-col text-[14px] px-1 py-2 md:py-3">
+                                    className="absolute drop-shadow-md bg-[white] z-[20] transition-all duration-300 mt-[2.7rem] w-[100%] h-[5rem] rounded-[5px]">
+                                        <ul className="darkest-col bg-[white] text-[14px] px-1 py-2 md:py-3">
                                             <li 
                                             onClick={() => handleSelectRole('Admin')}
                                             className="cursor-pointer rounded-md hover:bg-slate-300 py-1 pl-3">Admin</li>
@@ -158,13 +158,13 @@ export default function RegisterForm ({setTrigger}) {
                 <button 
                 type="submit"
                 disabled={loading}
-                className="cursor-pointer text-[14px] primary-col-bg rounded-md h-[40px] mb-6 w-[100%] 
-                flex justify-center items-center text-[white]"> 
+                className={`cursor-pointer text-[14px] ${loading ? 'primary-col-bg-disable' : 'primary-col-bg'} rounded-md h-[40px] mb-6 w-[100%] 
+                flex justify-center items-center text-[white]`}> 
                     {loading ? '...' : 'Register'}
                 </button>
                 {successRegister && 
                     <div 
-                    className="w-[364px] h-[70px] mb-[15rem] bg-trans rounded-md absolute  bg-white drop-shadow-md flex py-2 flex-col justify-center items-center">
+                    className="w-[75%] md:w-[364px] h-[70px] mb-[15rem] bg-trans rounded-md absolute  bg-white drop-shadow-md flex py-2 flex-col justify-center items-center">
                         <h2 className="font-[500]  text-[15px]">Success Create an Account!</h2>
                         <p className="text-[13px]">Please Login to Continue.</p>
                     </div>

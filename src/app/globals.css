@@ -8,6 +8,10 @@
   background-color: #2563EB;
 }
 
+.primary-col-bg-disable {
+  background-color:rgba(90, 130, 216, 0.98);
+}
+
 .primary-light-col-bg {
   background-color: #3B82F6;
 }
@@ -54,8 +58,9 @@
 }
 
 .bg-trans-danger {
-  background-color:rgba(243, 99, 99, 0.49);
+  background-color:rgba(224, 33, 33, 0.43);
   backdrop-filter: blur(20px);
+  color :rgb(255, 255, 255);
 }
 
 .bg-trans {

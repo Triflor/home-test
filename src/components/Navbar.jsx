@@ -16,12 +16,9 @@ export default function Navbar ({username}) {
     const [screenWidth, setScreenWidth] = useState(681)
     const [show, setShow] = useState(false)
     const [showDropdown, setShowDropdown] = useState(false)
-    const [name, setName] = useState('')
     const router = useRouter()
 
     useEffect(() => {
-        if(localStorage.getItem('user')) setName(localStorage.getItem('user'))
-
         const size = () => {
             setScreenWidth(window.innerWidth)
         }

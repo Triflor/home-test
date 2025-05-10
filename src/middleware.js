@@ -9,7 +9,7 @@ export function middleware(request){
 
     const goingPublic = publicPath.some(path => pathname.startsWith(path))
 
-    if(!token && !goingPublic) {
+    if(!token && request.nextUrl.pathname === '/') {
         const loginUrl = request.nextUrl.clone()
         loginUrl.pathname ='/authentication'
 

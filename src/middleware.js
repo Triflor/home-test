@@ -9,12 +9,12 @@ export function middleware(request){
 
     const goingPublic = publicPath.some(path => pathname.startsWith(path))
 
-    if(!token && request.nextUrl.pathname === '/') {
-        const loginUrl = request.nextUrl.clone()
-        loginUrl.pathname ='/authentication'
+    // if(!token && request.nextUrl.pathname === '/') {
+    //     const loginUrl = request.nextUrl.clone()
+    //     loginUrl.pathname ='/authentication'
 
-        return NextResponse.redirect(loginUrl)
-    }
+    //     return NextResponse.redirect(loginUrl)
+    // }
 
     if(token && role == 'Admin' && request.nextUrl.pathname === '/') {
         return NextResponse.redirect(new URL('/admin/articles', request.url))

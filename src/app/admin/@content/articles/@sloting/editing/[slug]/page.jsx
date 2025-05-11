@@ -1,6 +1,5 @@
 
 import dynamic from "next/dynamic"
-import { cookies } from "next/headers"
 import api from "@/api"
 
 const EditArticle = dynamic(() => import('@/components/ConfigArticles/EditArticle'))

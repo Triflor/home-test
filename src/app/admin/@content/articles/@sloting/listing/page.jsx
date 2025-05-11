@@ -1,7 +1,6 @@
 
 import dynamic from "next/dynamic"
 import api from "@/api"
-
 const ListArticles = dynamic(() => import('@/components/ConfigArticles/ListArticle'))
 
 export default async function Dashboard () {

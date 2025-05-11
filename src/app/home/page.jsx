@@ -12,11 +12,9 @@ export default async function Home () {
     const stored = cookies()
     const name = stored.get('user')?.value || 'Your name'
 
-    console.log(name)
     try {
         const res = await api.get('/articles')    
         datas = res.data.data
-        console.log(datas)
     } catch (error) {
         console.error(error?.message || error?.response?.data || error)
     }

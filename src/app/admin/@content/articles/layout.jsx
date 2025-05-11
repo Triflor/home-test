@@ -1,11 +1,6 @@
 
-import dynamic from "next/dynamic"
 import { cookies } from "next/headers"
 import api from "@/api"
-
-const ListArticles = dynamic(() => import('@/components/ConfigArticles/ListArticle'))
-const CreateArticle = dynamic(() => import('@/components/ConfigArticles/CreateArticle'))
-const Profile = dynamic(() => import('@/app/profile/page'))
 
 export default async function Dashboard ({sloting}) {
     const cookieStore = await cookies()
@@ -20,6 +15,7 @@ export default async function Dashboard ({sloting}) {
     } catch (error) {
         console.error(error)
     }
+
 
     try {
         const resCat = await api.get('/categories')    
@@ -37,7 +33,7 @@ export default async function Dashboard ({sloting}) {
                 </div>
                 <div className='flex flex-row justify-center items-center'>
                     <div className='rounded-full bg-[#BFDBFE] w-[28px] h-[29px]  mr-2 flex justify-center items-center text-[12px] '>
-                        {rawName[0]}
+                        { rawName ? rawName[0] : 'Y'}
                     </div>
                     <span className='text-[14px]'>{rawName}</span>
                 </div>

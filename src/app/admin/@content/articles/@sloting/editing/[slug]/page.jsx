@@ -7,28 +7,17 @@ const EditArticle = dynamic(() => import('@/components/ConfigArticles/EditArticl
 
 export default async function Dashboard ({params}) {
     const { slug } = params
-    const cookieStore = await cookies()
-    const raw = cookieStore.get('token')?.value
     let datas = ''
     let datasCategories = ''
-    let parsed = JSON.parse(raw)
-    const token = parsed.token
 
-    console.log(slug)
     try {
-        const resAr = await api.get(`/articles/${slug}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })    
+        const resAr = await api.get(`/articles/${slug}`)    
         datas = resAr.data
         
     } catch (error) {
         console.error(error)
     }
 
-    console.log(datas)
-    
     try {
         const resCat = await api.get('/categories')    
         datasCategories = resCat.data.data
@@ -39,7 +28,7 @@ export default async function Dashboard ({params}) {
 
     return (
         <div>
-            <EditArticle datasCategories={datasCategories} datas={datas}/>
+            <EditArticle datasCategories={datasCategories} datas={datas} id={slug}/>
         </div>
     )
 }

@@ -23,7 +23,7 @@ const schema = z.object({
     category: z.string().min(1, 'Please select category.'),
     content: z.string().nonempty('Plese input content'),
     category: z.string().nonempty('Plese select catagory'),
-    thumbnail: z.any().refine((files) => files?.length === 1)
+    thumbnail: z.any().optional()
 })
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
@@ -37,7 +37,6 @@ export default function CreateArticle ({datasCategories}) {
         resolver : zodResolver(schema)
     })
     const [dropdown, setDropdown] = useState(false)
-    const [quillVal, setQuillVal] = useState()
     const [wordCount, setWordCount] = useState()
     const [imageAvail, setImageAvail] = useState()
     const [loading, setLoading] = useState(false)
@@ -69,7 +68,6 @@ export default function CreateArticle ({datasCategories}) {
         
         try {
             formData.append('imageUrl', data.thumbnail[0])
-            console.log(token)
             const resImage = await api.post('/upload', formData, {
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -80,8 +78,6 @@ export default function CreateArticle ({datasCategories}) {
                 content : data.content,
                 imageUrl : resImage.data.imageUrl
             }
-
-            console.log(resImage.data)
 
             const res = await api.post('/articles', finalData, {
                 headers: { Authorization: `Bearer ${token}` }
@@ -164,9 +160,9 @@ export default function CreateArticle ({datasCategories}) {
                                         <Image
                                         src={imageWatch && URL.createObjectURL(imageWatch[0])}
                                         alt='Preview'
-                                        width={100}
-                                        height={100}
-                                        className="mb-2 rounded-md w-[223px] object-contain h-[140px]"
+                                        width={130}
+                                        height={130}
+                                        className="mb-2 rounded-md w-[210px] object-cover h-[140px]"
                                         />
                                         <div className='flex flex-row items-center w-[100%] py-1 justify-center'>
                                             <span className='red-col'>Delete</span>
@@ -307,9 +303,9 @@ export default function CreateArticle ({datasCategories}) {
                                     <button 
                                     disabled={loading}
                                     type='submit'
-                                    className="cursor-pointer w-[77px] h-[40px] rounded-md primary-col-bg text-white flex 
-                                    justify-center items-center">
-                                        Updated
+                                    className={`cursor-pointer w-[77px] h-[40px] rounded-md ${loading ? 'primary-col-bg-disable' : 'primary-col-bg' } text-white flex 
+                                    justify-center items-center`}>
+                                        {loading ? '...' : 'Updated'}
                                     </button>
                                 </li>
                             </ul>

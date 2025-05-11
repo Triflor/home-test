@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic"
 import Image from "next/image"
-import Link from "next/link"
 import ArrowBack from "@/assets/arrow-back.png"
 import Picture from "@/assets/image.svg"
 import Down from "@/assets/chevron-down.svg"
@@ -23,28 +22,27 @@ const schema = z.object({
     category: z.string().min(1, 'Please select category.'),
     content: z.string().nonempty('Plese input content'),
     category: z.string().nonempty('Plese select catagory'),
-    thumbnail: z.any().refine((files) => files?.length === 1)
+    thumbnail: z.any().optional()
 })
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
     ssr: false
 })
 
-export default function EditArticle ({datasCategories, datas}) {
+export default function EditArticle ({datasCategories, datas, edit}) {
 
     const { control, reset,
         register, watch, setValue, getValues, handleSubmit, formState: { errors } } = useForm({
         resolver : zodResolver(schema)
     })
     const [dropdown, setDropdown] = useState(false)
-    const [quillVal, setQuillVal] = useState()
     const [wordCount, setWordCount] = useState()
     const [imageAvail, setImageAvail] = useState()
     const [loading, setLoading] = useState(false)
     const [valuePreview, setValuePreview] = useState()
     const [showPreview, setShowPreview] =  useState(false)
     const [succesAlert, setSuccessAlert] = useState(false)
-    const [getImge, setGetImage] = useState()
+    const [getImage, setGetImage] = useState()
     const [categoryVal, setCategoryVal] = useState('Select Category')
     const router = useRouter()
     const imageWatch = watch('thumbnail')
@@ -61,10 +59,15 @@ export default function EditArticle ({datasCategories, datas}) {
         return setImageAvail(false)
     },[imageWatch])
 
-    console.log(datas)
 
     useEffect(() => {
-        if(datas?.imageUrl) setGetImage(imageUrl)
+        if(datas && datas?.imageUrl) setGetImage(datas?.imageUrl)
+        if(datas && datas?.content) setValue('content', datas?.content)
+        if(datas) {
+         setValue('category', datas?.categoryId)
+         setCategoryVal(datas.category.name)
+        }
+        
     },[datas])
 
     const onSubmit = async (data, e) => {
@@ -75,23 +78,20 @@ export default function EditArticle ({datasCategories, datas}) {
             const formData = new FormData()
             const stored = Cookies.get('token')
             const token = JSON.parse(stored)?.token
-            const image = null
 
-                formData.append('imageUrl', data.thumbnail[0])
-                const resImage = await api.post('/upload', formData, {
-                    headers: { Authorization: `Bearer ${token}` }
-                })
+            formData.append('imageUrl', data.thumbnail[0])
+            const resImage = await api.post('/upload', formData, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
             
             const finalData = {
                 title : data.title,
                 categoryId : data.category,
                 content : data.content,
-                imageUrl : image ? image : resImage.data.imageUrl
+                imageUrl : getImage || resImage.data.imageUrl
             }
 
-            console.log(resImage.data)
-
-            const res = await api.post('/articles', finalData, {
+            const res = await api.put(`/articles/${id}`, finalData, {
                 headers: { Authorization: `Bearer ${token}` }
             })
 
@@ -99,10 +99,11 @@ export default function EditArticle ({datasCategories, datas}) {
             setImageAvail(false)
             setSuccessAlert(true)
             reset()
+            getImage()
 
             setTimeout(() => {
                 setSuccessAlert(false)
-
+                router.back()
             },2500)
 
         } catch (err) {
@@ -157,7 +158,7 @@ export default function EditArticle ({datasCategories, datas}) {
                             heigth={20}
                         />
                     </button>
-                    <p className="ml-2">Create Article</p>
+                    <p className="ml-2">Edit Article</p>
                 </div>
                 <div>
                     <form onSubmit={handleSubmit(onSubmit)}  className='mt-[2rem]'>
@@ -170,18 +171,32 @@ export default function EditArticle ({datasCategories, datas}) {
                                 {imageAvail && !loading && 
                                     <div className='flex flex-col items-center'>
                                         <Image
-                                        src={imageWatch ? URL.createObjectURL(imageWatch[0]) : datas?.imageUrl}
+                                        src={URL.createObjectURL(imageWatch[0])}
                                         alt='Preview'
                                         width={100}
                                         height={100}
-                                        className="mb-2 rounded-md w-[223px] object-contain h-[140px]"
+                                        className="mb-2 rounded-md w-[223px] object-cover h-[140px]"
                                         />
                                         <div className='flex flex-row items-center w-[100%] py-1 justify-center'>
                                             <span className='red-col'>Edit</span>
                                             <span className='red-col'>Delete</span>
                                         </div>
                                     </div> }
-                                    { !loading && !imageAvail &&
+                                    {getImage && !loading && 
+                                    <div className='flex flex-col items-center'>
+                                        <Image
+                                        src={getImage}
+                                        alt='Preview'
+                                        width={150}
+                                        height={150}
+                                        className="mb-2 rounded-md w-[210px] object-cover h-[140px]"
+                                        />
+                                        <div className='flex flex-row items-center w-[80%] py-1 justify-around'>
+                                            <span className='primary-col'>Edit</span>
+                                            <span className='red-col'>Delete</span>
+                                        </div>
+                                    </div> }
+                                    { !loading && !imageAvail && !getImage &&
                                     <div className='flex flex-col justify-center items-center'>
                                         <Image
                                             src={Picture}
@@ -198,7 +213,7 @@ export default function EditArticle ({datasCategories, datas}) {
                             <input type='file'
                             accept=".jpg, .png"
                             {...register('thumbnail')}
-                            defaultValue={datas?.imageUrl}
+                            // defaultValue={datas?.imageUrl}
                             name="thumbnail" 
                             id="thumbnail" 
                             className="hidden"
@@ -275,7 +290,7 @@ export default function EditArticle ({datasCategories, datas}) {
                         </div>
                         <Controller
                             name='content'
-                            defaultValue={datas?.content}
+                            defaultValue=''
                             control={control}
                             render={({field}) =>(
                             <div className=" h-[450px] mt-6 flex flex-col">
@@ -318,9 +333,9 @@ export default function EditArticle ({datasCategories, datas}) {
                                     <button 
                                     disabled={loading}
                                     type='submit'
-                                    className="cursor-pointer w-[77px] h-[40px] rounded-md primary-col-bg text-white flex 
-                                    justify-center items-center">
-                                        Updated
+                                    className={`cursor-pointer w-[77px] h-[40px] rounded-md ${loading ? 'primary-col-bg-disable' : 'primary-col-bg'} text-white flex 
+                                    justify-center items-center`}>
+                                        {loading? '...' : 'Updated'}
                                     </button>
                                 </li>
                             </ul>

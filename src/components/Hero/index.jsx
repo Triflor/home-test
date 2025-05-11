@@ -58,7 +58,7 @@ export default function Hero() {
                     className="object-cover w-[100%] z-[-30] h-[100%] absolute"
                 />
                 <div className='flex flex-col h-[276px] justify-between items-center text-white '>
-                    <div className='flex flex-col md:mb-0 mb-6 max-w-[80%] md:w-[730px] text-center flex flex-col justify-center items-center'>
+                    <div className='flex flex-col md:mb-0 mb-4 max-w-[97%] md:w-[730px] text-center flex flex-col justify-center items-center'>
                         <p className='text-[16px] mb-2'>Blog Genzet</p>
                         <p className='text-[35px] md:text-[48px] leading-[39px] md:leading-[48px] mb-3'>
                             The Journal : Design Resources, Interviews, and Industry News</p>

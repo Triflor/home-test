@@ -88,7 +88,7 @@ export default function Navbar ({styled=true, name}) {
                 <div 
                 onClick={() => setShowDropdown((prev) => !prev)}
                 className='flex cursor-pointer flex-row justify-center items-center'>
-                    <div className='rounded-full bg-[#BFDBFE] w-[28px] h-[29px] sm:w-[32px] sm:h-[32px] 
+                    <div className='rounded-full bg-[#BFDBFE] w-[30px] h-[30px] sm:w-[32px] sm:h-[32px] 
                     mr-2 flex justify-center items-center text-[12px] md:text-[14px]'>
                         {name[0]}
                     </div>

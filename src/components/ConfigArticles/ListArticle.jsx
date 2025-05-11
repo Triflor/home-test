@@ -9,12 +9,14 @@ import img from "@/assets/hero-bg.jpg"
 import Link from "next/link"
 
 const DeleteAlert = dynamic(() => import('@/components/Popup/Delete/DeleteArticle'))
-
+const PreviewArticle = dynamic(() => import('@/components/Popup/PreviewArticle'))
 
 export default function ListArticle ({datas, datasCategories}){
     const [show, setShow] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [createShow, setCreateShow] = useState(false)
+    const [showArticle, setShowArticle] = useState(false)
+    const [colectId, setColectId] = useState()
     const [id, setId] = useState('')
 
     const handleDelete = (id) => {
@@ -22,8 +24,9 @@ export default function ListArticle ({datas, datasCategories}){
         setId(id)
     }
 
-    const handleSelected = () => {
-
+    const handlePreview = (id) => {
+        setColectId(id)
+        setShowArticle(true)
     }
 
     const handleDate = (inputDate) => {
@@ -127,6 +130,9 @@ export default function ListArticle ({datas, datasCategories}){
                 setShow={setShow} 
                 cat={datas.length} 
                 id={id}/>}
+            {showArticle &&
+                <PreviewArticle id={colectId} setShowArticle={setShowArticle}/>
+            }
             <div className={`w-[100%]`}>
                 <div className={`w-[100%] ${createShow ? 'opacity-0' : 'opacity-100'} rounded-md bg-[#F9FAFB] w-[100%]`}>
                     {Header()}
@@ -169,7 +175,8 @@ export default function ListArticle ({datas, datasCategories}){
                                         <td className="max-w-[110px] px-6  text-center w-[fit-content] py-3 ">
                                             <div className="flex flex-row justify-around items-center">
                                                 <span
-                                                className='primary-col'
+                                                onClick={() => handlePreview(item.id)}
+                                                className='cursor-pointer primary-col'
                                                 ><u>Preview</u></span>
                                                 <Link
                                                 href={`/admin/articles/editing/${item.id}`}>

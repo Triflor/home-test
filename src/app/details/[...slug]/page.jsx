@@ -22,7 +22,6 @@ export default async function Details ({params}) {
     }
 
     try {
-        const res = await api.get(`/articles/${slug[1]}`)  
         const resArticles = await api.get(`/articles`, {
             params : {
                 categoryId : slug[0],

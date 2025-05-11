@@ -4,10 +4,10 @@ const Navbar = dynamic(() => import('@/components/Navbar'))
 const AttNavbar = dynamic(() => import('@/components/AttNavbar'))
 
 
-export default function MainLayout ({styled, children}) {
+export default function MainLayout ({styled, children, name}) {
     return(
         <>
-            {styled ? <AttNavbar/> : <Navbar/>}
+            {styled ? <AttNavbar name={name}/> : <Navbar/>}
                 {children}
             <Footer/>
         </>

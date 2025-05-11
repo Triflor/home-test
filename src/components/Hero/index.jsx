@@ -24,6 +24,18 @@ export default function Hero() {
             } catch(err) {
                 console.error(err)
             }
+
+            try {
+                const resAr = await api.get(`/articles`, {
+                    params : {
+                        content :'kerbau',
+                        limit : 3
+                    }
+                }) 
+                console.log(resAr.data)
+            } catch (error) {
+                console.error(err)
+            }
         }
         fething()
     },[])
@@ -46,7 +58,7 @@ export default function Hero() {
                     className="object-cover w-[100%] z-[-30] h-[100%] absolute"
                 />
                 <div className='flex flex-col h-[276px] justify-between items-center text-white '>
-                    <div className='flex flex-col md:mb-0 mb-6 w-[295px] md:w-[730px] text-center flex flex-col justify-center items-center'>
+                    <div className='flex flex-col md:mb-0 mb-6 max-w-[80%] md:w-[730px] text-center flex flex-col justify-center items-center'>
                         <p className='text-[16px] mb-2'>Blog Genzet</p>
                         <p className='text-[35px] md:text-[48px] leading-[39px] md:leading-[48px] mb-3'>
                             The Journal : Design Resources, Interviews, and Industry News</p>
@@ -77,13 +89,13 @@ export default function Hero() {
                             { dropdown &&
                             <div 
                             className="absolute transition-all drop-shadow-md duration-300 mt-[3rem] 
-                            bg-white w-[100%] min-h-[6rem] max-h-[15rem] overflow-y-scroll rounded-[5px]">
-                                <ul className="darkest-col text-[14px] py-2 md:py-2">
+                            bg-white w-[100%] min-h-[6rem] max-h-[15rem]  rounded-[5px]">
+                                <ul className="darkest-col text-[14px] px-1 py-2">
                                     {categories?.map((item, index) => (
                                         <li 
                                         key={index}
                                         onClick={() => handleSelected(item.id, item.name)}
-                                        className="cursor-pointer hover:bg-slate-200 py-1 pl-3">{item.name}</li>
+                                        className="cursor-pointer rounded-md hover:bg-slate-200 py-1 pl-3">{item.name}</li>
                                     ))}
                                 </ul>
                             </div>

@@ -7,22 +7,21 @@ export default async function Profile () {
 
     const cookieStore = await cookies()
     const raw = cookieStore.get('token')?.value
-
-    let parsed
-    try {
-        parsed = JSON.parse(raw)
-    } catch {
-        console.log('invalid session data')
-    }
-
+    let parsed = JSON.parse(raw)
     const token = parsed.token
-    const res = await api.get('/auth/profile', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    })
+    let user
+
+    try {
+        const res = await api.get('/auth/profile', {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        user = res.data
+    } catch (error) {
+        console.error(error?.message || error?.response?.data || error)
+    }
     
-    let user = res.data
 
     return (
         <MainLayout styled={true}>

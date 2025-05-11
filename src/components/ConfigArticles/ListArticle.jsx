@@ -9,12 +9,10 @@ import img from "@/assets/hero-bg.jpg"
 import Link from "next/link"
 
 const DeleteAlert = dynamic(() => import('@/components/Popup/Delete/DeleteArticle'))
-const CreateArticle = dynamic(() => import('./CreateArticle'))
 
 
 export default function ListArticle ({datas, datasCategories}){
     const [show, setShow] = useState(false)
-    const [confirm, setConfirm] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [createShow, setCreateShow] = useState(false)
     const [id, setId] = useState('')
@@ -26,6 +24,16 @@ export default function ListArticle ({datas, datasCategories}){
 
     const handleSelected = () => {
 
+    }
+
+    const handleDate = (inputDate) => {
+        const date = new Date(inputDate)
+        const formattedDate = date.toLocaleDateString('en-us', {
+            year:'numeric',
+            month:'short',
+            day:'numeric'
+        })
+        return formattedDate
     }
 
     const Header = () => {
@@ -157,7 +165,7 @@ export default function ListArticle ({datas, datasCategories}){
                                         <td className="max-w-[95px] px-5 text-center w-[fit-content] py-3 " >
                                             {item.category.name}</td>
                                         <td className="max-w-[130px] text-center text-[14px] px-5 w-[fit-content] py-3 ">
-                                            {item.createdAt}</td>
+                                            {handleDate(item.createdAt)}</td>
                                         <td className="max-w-[110px] px-6  text-center w-[fit-content] py-3 ">
                                             <div className="flex flex-row justify-around items-center">
                                                 <span

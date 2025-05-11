@@ -31,6 +31,16 @@ export default function ListCategories ({datas}) {
         setShowEdit(true)        
     }
 
+    const handleDate = (inputDate) => {
+        const date = new Date(inputDate)
+        const formattedDate = date.toLocaleDateString('en-us', {
+            year:'numeric',
+            month:'short',
+            day:'numeric'
+        })
+        return formattedDate
+    }
+
     return (
         <div className="flex items-center p-[24px]">
             {show && 
@@ -120,7 +130,7 @@ export default function ListCategories ({datas}) {
                                         {item.name}
                                     </td>
                                     <td className="max-w-[140px] text-center text-[14px] px-5 py-4 ">
-                                        {item.createdAt}
+                                        {handleDate(item.createdAt)}
                                     </td>
                                     <td className="max-w-[115px] px-[3rem] text-center py-4 ">
                                         <div 

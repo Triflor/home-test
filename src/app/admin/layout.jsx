@@ -6,10 +6,12 @@ import logout from "@/assets/logout.svg"
 import Link from "next/link"
 import Logo from '@/assets/Logo.svg'
 import Cookies from 'js-cookie'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 export default function Layout ({ content }) {
     const router = useRouter()
+    const navigation = usePathname().split('/admin/')[1]
+
     const handleLogout = () => {
         Cookies.remove('token')
         Cookies.remove('user')
@@ -27,7 +29,7 @@ export default function Layout ({ content }) {
                     className="pl-3 mb-1"
                 />
                 <ul className="mt-6 text-[#F3F4F6] text-[16px] font-[500]">
-                    <li className="py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]">
+                    <li className={` ${navigation == 'articles' && 'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
                         <Link href={'/admin/articles'} className="flex flex-row w-[100%]">
                             <Image
                                 alt={'Logo'}
@@ -38,7 +40,7 @@ export default function Layout ({ content }) {
                             <span className="ml-3">Articles</span>
                         </Link>
                     </li>
-                    <li className="py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]">
+                    <li className={` ${navigation == 'categories' && 'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
                         <Link href={'/admin/categories'} className="flex flex-row w-[100%]">
                             <Image
                                 alt={'Logo'}

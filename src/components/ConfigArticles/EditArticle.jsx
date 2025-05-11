@@ -91,6 +91,7 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                 imageUrl : getImage || resImage.data.imageUrl
             }
 
+            
             const res = await api.put(`/articles/${id}`, finalData, {
                 headers: { Authorization: `Bearer ${token}` }
             })

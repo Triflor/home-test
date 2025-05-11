@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link"
 import Image from "next/image"
-import img from '@/assets/hero-bg.jpg'
+import image from '@/assets/image.svg'
 import DOMPurify from 'dompurify'
 
 export default function ArticleCard ({ datas = [] }) {
@@ -25,13 +25,22 @@ export default function ArticleCard ({ datas = [] }) {
                 href={`/details/${item?.categoryId}/${item?.id}`}
                 className='w-[300px]  sm:w-[440px] md:w-[auto] mb-[38px]'>
                     <div className='w-[100%] sm:h-[250px] md:h-[240px] rounded-[12px]'>
-                        <Image
-                            alt='article'
-                            src={item?.imageUrl ? item.imageUrl : img}
-                            height={300}
-                            width={300}
-                            className="rounded-[12px] w-[100%] h-[100%] object-cover"
-                        />
+                        { item?.imageUrl ?
+                            <Image
+                                alt='article'
+                                src={item?.imageUrl ? item.imageUrl : img}
+                                height={180}
+                                width={180}
+                                className="rounded-[12px] w-[100%] h-[100%] object-cover"
+                            /> :
+                            <Image
+                                alt='article'
+                                src={picture}
+                                height={180}
+                                width={180}
+                                className="rounded-[12px] w-[100%] h-[100%] object-contain"
+                            />
+                        }
                         </div>
                         <p className="text-[12px] md:text-[14px] mt-4 mb-2 light-col">
                             {handleDate(item?.createdAt)}

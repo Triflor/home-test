@@ -24,7 +24,7 @@ export default async function Details ({params}) {
     try {
         const resArticles = await api.get(`/articles`, {
             params : {
-                categoryId : slug[0],
+                categoryId : `${slug[0]}`,
                 limit : 3
             }
         }) 

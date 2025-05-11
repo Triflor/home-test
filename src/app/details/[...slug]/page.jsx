@@ -50,7 +50,7 @@ export default async function Details ({params}) {
                 <p className="md:text-[30px] font-[600] text-[24px] leading-[32px] md:w-[642px] md:leading-[36px] mb-[35px]">{datas.title}</p>
                 <div className="w-[100%] md:h-[480px] mb-[34px]">
                     <Image
-                        src={datas.imgeUrl ? datas.imageUrl : img}
+                        src={datas.imageUrl ? datas.imageUrl : img}
                         alt="Image"
                         height={'100%'}
                         width={'100%'}

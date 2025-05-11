@@ -1,7 +1,7 @@
-# Author : Bildan Jauhary
-# Vercel app : https://home-test-bildan.vercel.app
+## Author : Bildan Jauhary
+## Vercel app : https://home-test-bildan.vercel.app
 
-# Stack : Next JS @15.3.2 App Router
+## Stack : Next JS @15.3.2 App Router
 
 ## additional lib/package
 - React Quill New
@@ -14,7 +14,7 @@ https://fonts.google.com/specimen/Archivo
 ## Getting Started Manually
 npm run dev
 
-#$ port
+## port
 localhost:3000
 
 ## Quick info

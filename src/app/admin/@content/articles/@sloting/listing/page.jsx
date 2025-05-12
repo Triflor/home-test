@@ -8,10 +8,8 @@ export default async function Dashboard () {
     let datasCategories = ''
 
     try {
-        const res = await fetch('http://localhost:3000/api/articles'
-        )    
-        const response = await res.json()
-        datas = response.data
+        const res = await api.get('/articles')    
+        datas = res.data.data
     } catch (error) {
         console.error(error)
     }

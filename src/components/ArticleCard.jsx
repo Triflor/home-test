@@ -1,8 +1,7 @@
 'use client'
 import Link from "next/link"
 import Image from "next/image"
-import image from '@/assets/image.svg'
-import DOMPurify from 'dompurify'
+import pic from '@/assets/image.svg'
 
 export default function ArticleCard ({ datas = [] }) {
 
@@ -28,16 +27,16 @@ export default function ArticleCard ({ datas = [] }) {
                         { item?.imageUrl ?
                             <Image
                                 alt='article'
-                                src={item?.imageUrl ? item.imageUrl : img}
+                                src={item?.imageUrl}
                                 height={180}
                                 width={180}
                                 className="rounded-[12px] w-[100%] h-[100%] object-cover"
                             /> :
                             <Image
                                 alt='article'
-                                src={picture}
-                                height={180}
-                                width={180}
+                                src={pic}
+                                height={150}
+                                width={150}
                                 className="rounded-[12px] w-[100%] h-[100%] object-contain"
                             />
                         }

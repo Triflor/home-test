@@ -4,13 +4,10 @@ import { cookies } from "next/headers"
 import api from "@/api"
 
 const ListCategories = dynamic(() => import('@/components/ConfigCategories/ListCategories'))
-const Profile = dynamic(() => import('@/app/profile/page'))
 
-export default async function Dashboard ({params}) {
-    const { slug } = await params
+export default async function Dashboard () {
     const cookieStore = await cookies()
-    const rawName = cookieStore.get('user')?.value
-    let datas = ''
+    const rawName = cookieStore.get('user') ? cookieStore.get('user').value : null
     let datasCategories = ''
     
     try {
@@ -28,9 +25,9 @@ export default async function Dashboard ({params}) {
                 </div>
                 <div className='flex flex-row justify-center items-center'>
                     <div className='rounded-full bg-[#BFDBFE] w-[28px] h-[29px]  mr-2 flex justify-center items-center text-[12px] '>
-                        {rawName[0]}
+                        {rawName ? rawName[0] : 'Y'}
                     </div>
-                    <span className='text-[14px]'>{rawName}</span>
+                    <span className='text-[14px]'>{rawName || 'Your name'}</span>
                 </div>
             </div>
             <div> 

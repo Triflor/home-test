@@ -95,7 +95,7 @@ export default function Hero() {
                                         <li 
                                         key={index}
                                         onClick={() => handleSelected(item.id, item.name)}
-                                        className="cursor-pointer rounded-md hover:bg-slate-200 py-1 pl-3">{item.name}</li>
+                                        className="cursor-pointer rounded-md hover:bg-slate-200 py-2 pl-3">{item.name}</li>
                                     ))}
                                 </ul>
                             </div>

@@ -8,7 +8,7 @@ const schema = z.object({
     name: z.string().nonempty('Please enter category.'),
 })
 
-export default function AddCategory ({setValue, setShowEdit, cat, datas, id}) {
+export default function AddCategory ({setShowEdit, cat, datas, id}) {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver : zodResolver(schema)
     })

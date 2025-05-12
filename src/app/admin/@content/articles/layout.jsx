@@ -16,7 +16,6 @@ export default async function Dashboard ({sloting}) {
         console.error(error)
     }
 
-
     try {
         const resCat = await api.get('/categories')    
         datasCategories = resCat.data.data

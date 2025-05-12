@@ -9,7 +9,7 @@ import Cookies from "js-cookie"
 
 export default function Hero() {
     const [dropdown, setDropdown] = useState(false)
-    const [categories, setCategories] = useState('')
+    const [categories, setCategories] = useState([])
     const [selectedVal, setSelectedVal] = useState('Select Category')
 
     useEffect(() => {

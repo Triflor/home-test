@@ -11,7 +11,7 @@ export default function DeleteCategory ({setShow, cat, category, id}) {
     else if(cat <= 10) margin ='mt-[-42%]'
 
     const deleteAction = () => {
-        fethingAction(id, '/admin/Categories', '/categories', 'delete')
+        fethingAction(id, '/admin/categories', '/categories', 'delete')
         setShow(false)
     }
     return (

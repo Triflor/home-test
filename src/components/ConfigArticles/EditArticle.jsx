@@ -29,7 +29,7 @@ const ReactQuill = dynamic(() => import('react-quill-new'), {
     ssr: false
 })
 
-export default function EditArticle ({datasCategories, datas, edit}) {
+export default function EditArticle ({datasCategories, datas, id}) {
 
     const { control, reset,
         register, watch, setValue, getValues, handleSubmit, formState: { errors } } = useForm({
@@ -68,21 +68,24 @@ export default function EditArticle ({datasCategories, datas, edit}) {
          setCategoryVal(datas.category.name)
         }
         
-    },[datas])
+    },[])
 
     const onSubmit = async (data, e) => {
         e.preventDefault()
         setLoading(true)
         
         try {
-            const formData = new FormData()
             const stored = Cookies.get('token')
             const token = JSON.parse(stored)?.token
+            const formData = new FormData()
+            let resImage
 
-            formData.append('imageUrl', data.thumbnail[0])
-            const resImage = await api.post('/upload', formData, {
-                headers: { Authorization: `Bearer ${token}` }
-            })
+            if(!getImage) {
+                formData.append('imageUrl', data.thumbnail[0])
+                resImage = await api.post('/upload', formData, {
+                    headers: { Authorization: `Bearer ${token}` }
+                })
+            }
             
             const finalData = {
                 title : data.title,
@@ -91,24 +94,28 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                 imageUrl : getImage || resImage.data.imageUrl
             }
 
-            
-            const res = await api.put(`/articles/${id}`, finalData, {
-                headers: { Authorization: `Bearer ${token}` }
+            const res = await fetch(`/api/articles?id=${id}`,{
+                method : 'PUT',
+                body : JSON.stringify(finalData)
             })
 
-            setLoading(false)
-            setImageAvail(false)
-            setSuccessAlert(true)
-            reset()
-            getImage()
+            const response = await res.json()
 
-            setTimeout(() => {
-                setSuccessAlert(false)
-                router.back()
-            },2500)
+            if(response.success) {
+                setLoading(false)
+                setImageAvail(false)
+                setSuccessAlert(true)
+                reset()
+                setGetImage()
+    
+                setTimeout(() => {
+                    setSuccessAlert(false)
+                    router.back()
+                },2500)
+            }
 
         } catch (err) {
-            console.error('Err :', err.response?.data || err.message)
+            console.error('Error :', err.response?.data || err.message)
         }
     }  
 
@@ -138,16 +145,22 @@ export default function EditArticle ({datasCategories, datas, edit}) {
     }
 
     const selectedVal = (name, id) => {
+        console.log(id)
         setValue('category', id)
         setCategoryVal(name)
         setDropdown(false)
     }
 
+    console.log(datasCategories)
+
     return (
         <div 
         className={`flex items-center p-[24px] h-[fit-content]`}>
             { showPreview && <Preview datas={valuePreview}/> }
-            { succesAlert && <SuccesAlert text={'Successfully edit article!'}/>}
+            { succesAlert && <SuccesAlert 
+            text={'Successfully edit article!'}
+            desc={'You will be redirect to the list'}
+            />}
 
             <div className="rounded-md px-5 bg-[#F9FAFB] w-[100%] h-[fit-content]">
                 <div className="flex flex-row w-[100%] h-[64px] items-center">
@@ -167,8 +180,8 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                             <span>Thumbnails</span>
                             <label
                              htmlFor='thumbnail'
-                             className="mt-1 cursor-pointer flex text-[13px] flex-col justify-center items-center light-col w-[223px] h-[187px] 
-                             bg-[white] rounded-md border-dashed border-slate border-2">
+                             className="mt-1 cursor-pointer flex text-[13px] flex-col justify-center items-center light-col w-[223px]
+                              h-[187px] bg-[white] rounded-md border-dashed border-slate border-2">
                                 {imageAvail && !loading && 
                                     <div className='flex flex-col items-center'>
                                         <Image
@@ -214,7 +227,6 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                             <input type='file'
                             accept=".jpg, .png"
                             {...register('thumbnail')}
-                            // defaultValue={datas?.imageUrl}
                             name="thumbnail" 
                             id="thumbnail" 
                             className="hidden"
@@ -238,7 +250,7 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                         <label htmlFor="">Category</label>
                         <Controller
                             name='category'
-                            defaultValue={datas?.category}
+                            defaultValue=''
                             control={control}
                             render={({field}) =>(
                                 <div 
@@ -334,8 +346,8 @@ export default function EditArticle ({datasCategories, datas, edit}) {
                                     <button 
                                     disabled={loading}
                                     type='submit'
-                                    className={`cursor-pointer w-[77px] h-[40px] rounded-md ${loading ? 'primary-col-bg-disable' : 'primary-col-bg'} text-white flex 
-                                    justify-center items-center`}>
+                                    className={`cursor-pointer w-[77px] h-[40px] rounded-md ${loading ? 'primary-col-bg-disable' : 'primary-col-bg'} 
+                                    text-white flex justify-center items-center`}>
                                         {loading? '...' : 'Updated'}
                                     </button>
                                 </li>

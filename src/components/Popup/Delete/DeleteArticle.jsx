@@ -12,7 +12,7 @@ export default function DeleteArticle ({setShow, cat, id}) {
     else if(cat <= 10) margin ='mt-[-48%]'
 
     const deleteAction = () => {
-        fethingAction(id, '/admin/Articles', '/articles', 'delete')
+        fethingAction(id, '/admin/articles', '/articles', 'delete')
         setShow(false)
     }
 

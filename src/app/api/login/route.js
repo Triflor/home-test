@@ -4,10 +4,10 @@ import { cookies } from 'next/headers'
 
 export async function POST(req) {
     try {
+        const cookieStore = await cookies()
         const body = await req.json()
         const res = await api.post('/auth/login', body)
     
-        const cookieStore = await cookies()
         cookieStore.set('token', JSON.stringify(res.data), {
             secure: true
         })
@@ -21,11 +21,9 @@ export async function POST(req) {
         })
         
     } catch (err) {
-        const errorMessage = err?.response?.data || err.message
-
         return NextResponse.json({
             success: false,
-            error : errorMessage,
+            error : err?.response?.data || err.message,
             status : err?.response?.status || 500
         })
     }

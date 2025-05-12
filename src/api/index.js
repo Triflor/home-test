@@ -3,10 +3,10 @@ import axiosRetry from 'axios-retry'
 
 export const api = axios.create({
 
-baseURL: 'https://test-fe.mysellerpintar.com/api',
-    headers: {
-        "Content-Type" : 'application/json',
-    }
+    baseURL: 'https://test-fe.mysellerpintar.com/api',
+        headers: {
+            "Content-Type" : 'application/json',
+        }
 })
 
 axiosRetry(api, {

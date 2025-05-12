@@ -5,7 +5,7 @@ import api from "@/api"
 const EditArticle = dynamic(() => import('@/components/ConfigArticles/EditArticle'))
 
 export default async function Dashboard ({params}) {
-    const { slug } = params
+    const { slug } = await params
     let datas = ''
     let datasCategories = ''
 

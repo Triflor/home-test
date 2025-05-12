@@ -13,9 +13,6 @@ export default function AdminLayout ({children}) {
     const pathname = usePathname()
     const navigation = pathname.split('/')[2] ||  ''
 
-    console.log(pathname)
-    console.log(navigation)
-
     const handleLogout = () => {
         Cookies.remove('token')
         Cookies.remove('user')

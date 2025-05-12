@@ -8,11 +8,13 @@ import Logo from '@/assets/Logo.svg'
 import Cookies from 'js-cookie'
 import { usePathname, useRouter } from 'next/navigation'
 
-export default function AdminLayout ({content}) {
+export default function AdminLayout ({children}) {
     const router = useRouter()
     const pathname = usePathname()
-    // const navigation = typeof pathname === 'string' && pathname.startsWith('/admin') ? 
-    // pathname().split('/admin/')[1] : ''
+    const navigation = pathname.split('/')[2] ||  ''
+
+    console.log(pathname)
+    console.log(navigation)
 
     const handleLogout = () => {
         Cookies.remove('token')
@@ -33,7 +35,7 @@ export default function AdminLayout ({content}) {
                 <ul className="mt-6 text-[#F3F4F6] text-[16px] font-[500]">
                     <li 
                     
-                    className={` 'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
+                    className={` ${navigation[0] == 'a' && 'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
                         <Link href={'/admin/articles'} className="flex flex-row w-[100%]">
                             <Image
                                 alt={'Logo'}
@@ -45,7 +47,7 @@ export default function AdminLayout ({content}) {
                         </Link>
                     </li>
                     <li 
-                    className={`  'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
+                    className={` ${navigation[0] == 'c' && 'bg-[#3B82F6]'} py-[6px] mb-2 rounded-sm pl-3 flex flex-row cursor-pointer hover:bg-[#3B82F6]`}>
                         <Link href={'/admin/categories'} className="flex flex-row w-[100%]">
                             <Image
                                 alt={'Logo'}
@@ -69,7 +71,7 @@ export default function AdminLayout ({content}) {
                     </li>
                 </ul>
             </div> 
-            {content}
+            {children}
         </div>
     )
 }

@@ -2,22 +2,19 @@ import { NextResponse } from 'next/server'
 import api from '@/api'
 
 export async function handler(req) {
-    
+
     const { searchParams } = new URL(req.url)
     const id = searchParams.get('id')
-    
+
     switch (req.method) {
-        case 'GET': GET(id)
-            break;
-        case 'POST':
-            break
-        case 'PUT' : PUT(id)
-            break
+        case 'GET': return await GET(id)
+        case 'POST': 
+        case 'PUT' : return await PUT(id)
         default: 
         return NextResponse.json({
             success: false,
-            error : 'Something went wrong',
-            status :  500
+            error : 'Method not allowed',
+            status :  405
         })
     }
 
@@ -65,5 +62,7 @@ export async function handler(req) {
             })
         }
 
+    }
 }
-}
+
+export { handler as POST, handler as GET, handler as PUT, handler as DELETE}

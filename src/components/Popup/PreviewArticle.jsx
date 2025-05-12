@@ -11,7 +11,9 @@ export default function PreviewArticle ({id, setShowArticle}) {
     useEffect(() => {
         const fething = async () => {
             try {
-                 const res = await fetch(`/api/articles?id=${id}`)
+                 const res = await fetch(`/api/articles?id=${id}`, {
+                    method: 'GET'
+                 })
                  const resData = await res.json()
                  
                  if(resData.success){
@@ -23,7 +25,7 @@ export default function PreviewArticle ({id, setShowArticle}) {
             } 
         }
         if(id) fething()
-    },[datas])
+    },[])
 
     const handleDate = (inputDate) => {
         const date = new Date(inputDate)

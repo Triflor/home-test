@@ -7,7 +7,8 @@ const ListCategories = dynamic(() => import('@/components/ConfigCategories/ListC
 
 export default async function Dashboard () {
     const cookieStore = await cookies()
-    const rawName = cookieStore.get('user') ? cookieStore.get('user').value : null
+    const rawName = cookieStore.get('user') ? 
+    cookieStore.get('user').value : null
     let datasCategories = ''
     
     try {

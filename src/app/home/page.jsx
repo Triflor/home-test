@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic"
 import { cookies } from "next/headers"
 import api from "@/api"
+import ArticleSkeleton from "@/components/Skeleton/ArticleSkeleton"
 
 const ArticleCard = dynamic(() => import('@/components/ArticleCard'))
 const Hero = dynamic(() => import('@/components/Hero'))
@@ -28,7 +29,10 @@ export default async function Home () {
                 <div className=' h-[100%] w-[100%]'>
                     <p className='mb-[30px] md:block hidden'>Showing : {datas.length} of 0 articles</p>
                     <div className=''>
+                        { !datas ? 
+                        <ArticleSkeleton/> :
                         <ArticleCard datas={datas}/>
+                        }
                     </div>
                 </div>
             </div>

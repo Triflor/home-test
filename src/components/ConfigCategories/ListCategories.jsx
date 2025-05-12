@@ -10,7 +10,7 @@ const DeleteAlert = dynamic(() => import('@/components/Popup/Delete/DeleteCatego
 const AddAlert = dynamic(() => import('@/components/Popup/AddCategory'))
 const EditAlert = dynamic(() => import('@/components/Popup/EditCategory'))
 
-export default function ListCategories ({datas}) {
+export default function ListCategories ({datas = []}) {
     const [show, setShow] = useState(false)
     const [showAdd, setShowAdd] = useState(false)
     const [category, setCategory] = useState('')

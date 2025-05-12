@@ -11,7 +11,7 @@ import Link from "next/link"
 const DeleteAlert = dynamic(() => import('@/components/Popup/Delete/DeleteArticle'))
 const PreviewArticle = dynamic(() => import('@/components/Popup/PreviewArticle'))
 
-export default function ListArticle ({datas, datasCategories}){
+export default function ListArticle ({datas = [], datasCategories = []}){
     const [show, setShow] = useState(false)
     const [dropdown, setDropdown] = useState(false)
     const [createShow, setCreateShow] = useState(false)

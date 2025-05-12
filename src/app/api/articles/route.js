@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-import { revalidatePath } from 'next/cache'
 import { cookies } from 'next/headers'
 import api from '@/api'
 
@@ -46,7 +45,6 @@ export async function PUT(req) {
             }
         })
         
-        revalidatePath('/admin/articles', 'layout')
         return NextResponse.json({
             success: true,
             status : 200,
@@ -81,7 +79,6 @@ export async function POST(req) {
             }
         })
         
-        revalidatePath('/admin/articles')
         return NextResponse.json({
             success: true,
             status : 200,

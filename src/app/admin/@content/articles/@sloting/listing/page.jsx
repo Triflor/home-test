@@ -8,8 +8,7 @@ export default async function Dashboard () {
     let datasCategories = ''
 
     try {
-        const res = await fetch('http://localhost:3000/api/articles', {
-             cache :  'no-store' }
+        const res = await fetch('http://localhost:3000/api/articles'
         )    
         const response = await res.json()
         datas = response.data
